@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carosello</title>
+    <link rel ="stylesheet" href ="style.css">
+    <link rel = "icon" type= "image/webp" href ="./OIP.jpg">
+</head>
+<body>
+    <h1>Carousel of Images</h1>
+
+    <video id="videoPlayer" width="500px" controls muted loop style= "display:none;" >
+        <source id="videoSource" type="video/mp4">
+    </video>
+
+    <a href = "https://www.delftstack.com/howto/javascript/javascript-array-of-images/">
+        <img id = "img" src = "inicio.jpg" alt = "randomImage" style="display: block;">
+    </a>
+
+    <div class ="carousel-controls">
+        <p><button type = "button" id = "btn-next" onclick = "back()">Back</button></p> 
+        <p><button type = "button" id = "btn-previous" onclick = "next()">Next</button></p>
+    </div>
+    <p id = "nameImg"></p>
+    <p id = "description"></p>
+    
+    <footer>
+        <hr>
+        <p>Author name: Danilo Russo</p>
+        <a href = "mailto:danilorusso.info94@gmail.com">Contact me</a>
+    </footer>
+    
+    <script>
+        const IMG = document.getElementById("img");
+        const NAME = document.getElementById("nameImg");
+        const DESC = document.getElementById("description");
+        const videoPlayer = document.getElementById("videoPlayer");
+        const videoSource = document.getElementById("videoSource");
+
+        const ROUTE = "./"
+
+        const images = [
+            {
+            archive : "barcelona.jpg", 
+            name : "barcelona",
+            tooltip: "City of Spain",
+            description: "A vibrant Mediterranean city known for Gaudí’s architecture, sandy beaches, and lively street culture."
+        }, 
+            
+        {   
+            archive : "paris.jpg", 
+            name : "paris",
+            tooltip: "Capital of France",
+            description: "The romantic capital of France, celebrated for its art, fashion, cuisine, and the Eiffel Tower."
+        },
+        {   
+            archive : "newyork.jpg",
+            name : "newyork",
+            tooltip: "Biggest city in the USA",
+            description: "A fast-paced global city known for its skyline, Broadway, cultural diversity, and endless energy."
+        },
+
+        {   
+            archive : "londres.jpg", 
+            name : "londres",
+            tooltip: "Capital of London",
+            description: "A historic yet modern metropolis famous for its landmarks, diverse culture, and royal heritage."
+        }
+    ]
+            
+
+        let position = 0;
+        function next(){
+            if (position >= images.length) {
+                alert("This is the last image");
+                videoSource.src = "./gandalf.mp4";
+                NAME.innerHTML = "Gandalf the Grey";
+                DESC.innerHTML = "You shall not pass!";
+                IMG.style.display = "none";
+                videoPlayer.style.display = "block";
+                videoPlayer.load();
+                videoPlayer.play();
+            } else {
+                position++
+                showImage();
+            }
+        }
+
+        function showImage(){
+                let image = ROUTE + images[position].archive;
+                IMG.src = image;
+                NAME.innerHTML = images[position].name;
+                IMG.title = images[position].tooltip;
+                DESC.innerHTML = images[position].description;
+                NAME.style.display = "block";
+                DESC.style.display = "block";
+                IMG.style.display = "block";
+                videoPlayer.style.display = "none";
+                videoPlayer.pause();
+                videoSource.src = "";
+            }
+
+        function back(){
+            
+            if (position < 0) {
+                alert("This is the first image");
+                videoSource.src = "./gandalf.mp4";
+                IMG.style.display = "none";
+                NAME.innerHTML = "Gandalf the Grey";
+                DESC.innerHTML = "You shall not pass!";
+                videoPlayer.style.display = "block";
+                videoPlayer.load();
+                videoPlayer.play();
+            } else {
+                position--
+                showImage();
+            }
+        }
+
+        showImage();
+
+        
+
+
+
+    </script>
+</body>
+</html>
